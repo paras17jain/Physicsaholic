@@ -4,7 +4,7 @@
  * Font: Space Grotesk for brand, DM Sans for links
  */
 import { useState, useEffect } from "react";
-import { Menu, X, BookOpen, Play, BarChart3, FileText } from "lucide-react";
+import { Menu, X, BookOpen, Play, BarChart3, FileText, GraduationCap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 
@@ -94,6 +94,14 @@ export default function Navbar() {
             DPP
           </Link>
           <Link
+            href="/pyq"
+            className="px-4 py-2 text-sm font-medium text-purple-400 hover:text-purple-300 transition-colors duration-300 rounded-lg hover:bg-purple-500/5 flex items-center gap-1.5"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            <GraduationCap className="w-3.5 h-3.5" />
+            PYQ
+          </Link>
+          <Link
             href="/progress"
             className="px-4 py-2 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors duration-300 rounded-lg hover:bg-emerald-500/5 flex items-center gap-1.5"
             style={{ fontFamily: "var(--font-body)" }}
@@ -165,6 +173,14 @@ export default function Navbar() {
               >
                 <FileText className="w-3.5 h-3.5" />
                 Practice DPPs
+              </Link>
+              <Link
+                href="/pyq"
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-purple-400 hover:text-purple-300 transition-colors rounded-lg hover:bg-purple-500/5 flex items-center gap-1.5"
+              >
+                <GraduationCap className="w-3.5 h-3.5" />
+                Previous Year Questions
               </Link>
               <Link
                 href="/progress"

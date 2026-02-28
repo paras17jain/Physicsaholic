@@ -4,7 +4,7 @@
  */
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { BookOpen, Zap, Layers, ArrowRight, Atom, Brain, FlaskConical, FileText } from "lucide-react";
+import { BookOpen, Zap, Layers, ArrowRight, Atom, Brain, FlaskConical, FileText, GraduationCap } from "lucide-react";
 import { Link } from "wouter";
 
 const features = [
@@ -52,6 +52,17 @@ const features = [
     iconBg: "bg-orange-500/10",
     iconColor: "text-orange-400",
   },
+  {
+    icon: GraduationCap,
+    title: "Previous Year Qs",
+    description: "70+ PYQs from JEE Main, JEE Advanced & NEET with detailed solutions and exam year tags",
+    href: "/pyq",
+    color: "purple",
+    gradient: "from-purple-500/10 to-purple-600/5",
+    border: "border-purple-500/20",
+    iconBg: "bg-purple-500/10",
+    iconColor: "text-purple-400",
+  },
 ];
 
 const topicPreviews = [
@@ -97,7 +108,7 @@ export default function LearnCTASection() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-12">
           {features.map((feature, i) => (
             <motion.div
               key={feature.title}

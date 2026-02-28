@@ -4,7 +4,7 @@
  * Font: Space Grotesk for brand, DM Sans for links
  */
 import { useState, useEffect } from "react";
-import { Menu, X, BookOpen } from "lucide-react";
+import { Menu, X, BookOpen, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 
@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Courses", href: "#courses" },
-  { label: "Videos", href: "#videos" },
+
   { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
@@ -77,6 +77,14 @@ export default function Navbar() {
             <BookOpen className="w-3.5 h-3.5" />
             Learn
           </Link>
+          <Link
+            href="/courses"
+            className="px-4 py-2 text-sm font-medium text-red-400 hover:text-red-300 transition-colors duration-300 rounded-lg hover:bg-red-500/5 flex items-center gap-1.5"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            <Play className="w-3.5 h-3.5" />
+            Videos
+          </Link>
           <a
             href="https://unacademy.com/@prateekjain"
             target="_blank"
@@ -124,6 +132,14 @@ export default function Navbar() {
               >
                 <BookOpen className="w-3.5 h-3.5" />
                 Learn Hub
+              </Link>
+              <Link
+                href="/courses"
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-red-400 hover:text-red-300 transition-colors rounded-lg hover:bg-red-500/5 flex items-center gap-1.5"
+              >
+                <Play className="w-3.5 h-3.5" />
+                Video Courses
               </Link>
               <a
                 href="https://unacademy.com/@prateekjain"

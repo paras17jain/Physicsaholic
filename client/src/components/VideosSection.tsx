@@ -1,33 +1,20 @@
 /*
  * Design: "Cosmic Classroom" — Popular Videos section
- * YouTube video embeds with styled containers and hover effects
+ * Shows top videos from the actual YouTube channel with link to full courses page
  */
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Play, ExternalLink } from "lucide-react";
+import { Play, ExternalLink, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
+import { allCourses, formatDuration, formatViews, getTotalVideos } from "@/data/videoData";
 
-const videos = [
-  {
-    id: "dQw4w9WgXcQ",
-    title: "Adventure Park Turned Physics Classroom!",
-    subtitle: "Timeout - Rounak Dalmia IIT Bombay | Prateek Jain",
-    thumbnail: "https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=600&h=340&fit=crop",
-  },
-  {
-    id: "dQw4w9WgXcQ",
-    title: "JEE Advanced 2021 Paper Analysis",
-    subtitle: "Physics (Shift 2) | Prateek Jain | Accelerate",
-    thumbnail: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&h=340&fit=crop",
-  },
-  {
-    id: "dQw4w9WgXcQ",
-    title: "JEE Advanced 2021 Paper Analysis",
-    subtitle: "Physics (Shift 1) | Prateek Jain | Accelerate",
-    thumbnail: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&h=340&fit=crop",
-  },
-];
+// Get top 6 most viewed videos across all courses
+const topVideos = allCourses
+  .flatMap(c => c.videos)
+  .sort((a, b) => b.views - a.views)
+  .slice(0, 6);
 
-function VideoCard({ video, index }: { video: typeof videos[0]; index: number }) {
+function VideoCard({ video, index }: { video: typeof topVideos[0]; index: number }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -37,14 +24,14 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
       className="group"
     >
       <div className="relative rounded-2xl overflow-hidden bg-[#151D2E] border border-white/5 hover:border-cyan-500/20 transition-all duration-500">
         {isPlaying ? (
           <div className="aspect-video">
             <iframe
-              src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
+              src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
               title={video.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -57,28 +44,34 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
             onClick={() => setIsPlaying(true)}
           >
             <img
-              src={video.thumbnail}
+              src={`https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`}
               alt={video.title}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300" />
+            {/* Duration badge */}
+            <span className="absolute bottom-2 right-2 text-xs bg-black/80 text-white px-1.5 py-0.5 rounded">
+              {formatDuration(video.duration)}
+            </span>
             {/* Play button */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-500/20 group-hover:border-amber-500/30 transition-all duration-300">
-                <Play className="w-7 h-7 text-white fill-white ml-1" />
+              <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-500/20 group-hover:border-amber-500/30 transition-all duration-300">
+                <Play className="w-6 h-6 text-white fill-white ml-0.5" />
               </div>
             </div>
           </div>
         )}
 
         {/* Info */}
-        <div className="p-5">
-          <h3 className="text-base font-bold text-white mb-1 line-clamp-1" style={{ fontFamily: "var(--font-display)" }}>
+        <div className="p-4">
+          <h3 className="text-sm font-bold text-white mb-1.5 line-clamp-2 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
             {video.title}
           </h3>
-          <p className="text-sm text-slate-500" style={{ fontFamily: "var(--font-body)" }}>
-            {video.subtitle}
-          </p>
+          <div className="flex items-center gap-3 text-xs text-slate-500">
+            <span>{formatViews(video.views)} views</span>
+            <span>{formatDuration(video.duration)}</span>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -103,32 +96,64 @@ export default function VideosSection() {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-[2px] bg-gradient-to-r from-cyan-500 to-transparent" />
             <span className="text-sm font-medium text-cyan-400 uppercase tracking-widest" style={{ fontFamily: "var(--font-mono)" }}>
-              Popular Videos
+              Most Popular
             </span>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
-              Watch & <span className="text-gradient-cyan">Learn</span>
-            </h2>
-            <a
-              href="https://www.youtube.com/@PhysicsaholicsbyPrateekJain"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-cyan-400 transition-colors"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              View All on YouTube
-              <ExternalLink className="w-4 h-4" />
-            </a>
+            <div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+                Watch & <span className="text-gradient-cyan">Learn</span>
+              </h2>
+              <p className="text-slate-400 mt-2 text-sm">
+                {getTotalVideos()}+ curated video lectures from the Physicsaholics YouTube channel
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/courses"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] hover:from-amber-400 hover:to-amber-500 transition-all duration-300 shadow-lg shadow-amber-500/20"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Browse All Courses
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a
+                href="https://www.youtube.com/@IITJEENEET"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-slate-400 hover:text-cyan-400 transition-colors"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                YouTube
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </motion.div>
 
-        {/* Video Grid */}
+        {/* Video Grid — Top 6 most viewed */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {videos.map((video, i) => (
-            <VideoCard key={i} video={video} index={i} />
+          {topVideos.map((video, i) => (
+            <VideoCard key={video.videoId} video={video} index={i} />
           ))}
         </div>
+
+        {/* Browse All CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 text-center"
+        >
+          <Link
+            href="/courses"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/[0.05] border border-white/[0.08] text-slate-300 hover:text-amber-400 hover:border-amber-500/30 hover:bg-amber-500/[0.05] transition-all text-sm font-medium"
+          >
+            <Play className="w-4 h-4" />
+            Explore all {getTotalVideos()} video lectures across 18 courses
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

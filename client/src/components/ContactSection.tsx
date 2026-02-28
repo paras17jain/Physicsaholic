@@ -1,17 +1,17 @@
 /*
  * Design: "Cosmic Classroom" — Contact section with glassmorphism form
  * Split layout: info on left, form on right
+ * Fixed: consistent YouTube link, removed old website link, honest form behavior
  */
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Send, MapPin, Mail, Phone, ExternalLink } from "lucide-react";
+import { Send, MapPin, Mail, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 
 const socialLinks = [
-  { name: "YouTube", url: "https://www.youtube.com/@PhysicsaholicsbyPrateekJain", icon: "▶" },
+  { name: "YouTube", url: "https://www.youtube.com/@IITJEENEET", icon: "▶" },
   { name: "Instagram", url: "https://www.instagram.com/physicsaholics/", icon: "📷" },
   { name: "Telegram", url: "https://t.me/physicsaholics", icon: "✈" },
-  { name: "Website", url: "https://www.physicsaholics.com", icon: "🌐" },
 ];
 
 export default function ContactSection() {
@@ -21,7 +21,11 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! We'll get back to you soon.");
+    // Construct mailto link as a fallback since there's no backend
+    const subject = encodeURIComponent(`Query from ${formData.name} via Physicsaholics Website`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`);
+    window.open(`mailto:contact@physicsaholics.com?subject=${subject}&body=${body}`, "_blank");
+    toast.info("Opening your email client to send the message.");
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
@@ -60,7 +64,7 @@ export default function ContactSection() {
                 Connect With Us
               </h3>
               <p className="text-slate-400 leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
-                Whether you have questions about courses, need guidance for your exam preparation, or want to join the Physicsaholics community — we're here to help.
+                Whether you have questions about courses, need guidance for your exam preparation, or want to join the Physicsaholics community — reach out through any of these channels.
               </p>
             </div>
 
@@ -76,7 +80,7 @@ export default function ContactSection() {
                 <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center">
                   <Mail className="w-4 h-4 text-cyan-400" />
                 </div>
-                <span className="text-sm" style={{ fontFamily: "var(--font-body)" }}>contact@physicsaholics.com</span>
+                <a href="mailto:contact@physicsaholics.com" className="text-sm hover:text-cyan-400 transition-colors" style={{ fontFamily: "var(--font-body)" }}>contact@physicsaholics.com</a>
               </div>
             </div>
 
@@ -85,7 +89,7 @@ export default function ContactSection() {
               <h4 className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-4" style={{ fontFamily: "var(--font-mono)" }}>
                 Follow Us
               </h4>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="flex flex-col gap-3">
                 {socialLinks.map((link) => (
                   <a
                     key={link.name}
@@ -120,7 +124,7 @@ export default function ContactSection() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all duration-300 outline-none"
                     style={{ fontFamily: "var(--font-body)" }}
-                    placeholder="John Doe"
+                    placeholder="Your name"
                   />
                 </div>
                 <div>
@@ -134,7 +138,7 @@ export default function ContactSection() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all duration-300 outline-none"
                     style={{ fontFamily: "var(--font-body)" }}
-                    placeholder="john@example.com"
+                    placeholder="your@email.com"
                   />
                 </div>
               </div>
@@ -165,14 +169,19 @@ export default function ContactSection() {
                   placeholder="Type your message here..."
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-semibold rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] hover:from-amber-400 hover:to-amber-500 transition-all duration-300 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                <Send className="w-4 h-4" />
-                Send Message
-              </button>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-semibold rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] hover:from-amber-400 hover:to-amber-500 transition-all duration-300 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  <Send className="w-4 h-4" />
+                  Send via Email
+                </button>
+                <span className="text-xs text-slate-600" style={{ fontFamily: "var(--font-mono)" }}>
+                  Opens your email client
+                </span>
+              </div>
             </form>
           </div>
         </div>

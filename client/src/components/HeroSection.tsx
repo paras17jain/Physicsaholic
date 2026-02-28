@@ -4,6 +4,7 @@
  */
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Star } from "lucide-react";
+import { Link } from "wouter";
 
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663318567070/4FDFmXoMNwPfojj8wTsUBc/hero-bg-RqYPHvyyAEpssrtAUwzhtU.webp";
 
@@ -78,15 +79,14 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: 0.45 }}
               className="flex flex-wrap gap-4"
             >
-              <a
-                href="#courses"
-                onClick={(e) => { e.preventDefault(); document.querySelector("#courses")?.scrollIntoView({ behavior: "smooth" }); }}
+              <Link
+                href="/courses"
                 className="group inline-flex items-center gap-2 px-7 py-3.5 text-base font-semibold rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] hover:from-amber-400 hover:to-amber-500 transition-all duration-300 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:-translate-y-0.5"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 Explore Courses
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
               <a
                 href="#videos"
                 onClick={(e) => { e.preventDefault(); document.querySelector("#videos")?.scrollIntoView({ behavior: "smooth" }); }}

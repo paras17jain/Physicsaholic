@@ -1,32 +1,31 @@
 /*
  * Design: "Cosmic Classroom" — Minimal dark footer with grid-dot pattern
+ * Fixed: consistent YouTube link, working resource links, proper navigation from sub-pages
  */
 import { ArrowUp } from "lucide-react";
+import { Link, useLocation } from "wouter";
 
 const quickLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Courses", href: "#courses" },
-  { label: "Videos", href: "#videos" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Courses", href: "/courses" },
+  { label: "Learn", href: "/learn" },
+  { label: "Quiz", href: "/quiz" },
+  { label: "Flashcards", href: "/flashcards" },
+  { label: "Progress", href: "/progress" },
 ];
 
 const resources = [
-  { label: "Vectors DPPs", href: "#courses" },
-  { label: "EM Induction DPPs", href: "#courses" },
-  { label: "Capacitor DPPs", href: "#courses" },
-  { label: "Study Material", href: "#courses" },
+  { label: "Video Courses", href: "/courses" },
+  { label: "Practice DPPs", href: "/dpp" },
+  { label: "Concept Library", href: "/learn" },
+  { label: "My Progress", href: "/progress" },
 ];
 
 export default function Footer() {
+  const [location] = useLocation();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleClick = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -57,12 +56,11 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {[
-                { icon: "▶", url: "https://www.youtube.com/@IITJEENEET" },
-                { icon: "📷", url: "https://www.instagram.com/physicsaholics/" },
-                { icon: "✈", url: "https://t.me/physicsaholics" },
-                { icon: "🌐", url: "https://www.physicsaholics.com" },
+                { icon: "▶", url: "https://www.youtube.com/@IITJEENEET", label: "YouTube" },
+                { icon: "📷", url: "https://www.instagram.com/physicsaholics/", label: "Instagram" },
+                { icon: "✈", url: "https://t.me/physicsaholics", label: "Telegram" },
               ].map((item, i) => (
-                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-sm hover:bg-amber-500/10 transition-colors cursor-pointer">
+                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-sm hover:bg-amber-500/10 transition-colors cursor-pointer" title={item.label}>
                   {item.icon}
                 </a>
               ))}
@@ -77,14 +75,13 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
-                    onClick={(e) => { e.preventDefault(); handleClick(link.href); }}
                     className="text-sm text-slate-400 hover:text-amber-400 transition-colors"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -93,19 +90,18 @@ export default function Footer() {
           {/* Resources */}
           <div>
             <h4 className="text-xs font-medium text-slate-500 uppercase tracking-widest mb-4" style={{ fontFamily: "var(--font-mono)" }}>
-              Courses
+              Resources
             </h4>
             <ul className="space-y-2.5">
               {resources.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
-                    onClick={(e) => { e.preventDefault(); handleClick(link.href); }}
                     className="text-sm text-slate-400 hover:text-amber-400 transition-colors"
                     style={{ fontFamily: "var(--font-body)" }}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

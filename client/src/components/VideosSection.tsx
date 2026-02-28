@@ -1,6 +1,6 @@
 /*
  * Design: "Cosmic Classroom" — Popular Videos section
- * Shows top videos from the actual YouTube channel with link to full courses page
+ * Shows top PHYSICS LECTURE videos (filtered), not viral/motivational content
  */
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
@@ -8,9 +8,19 @@ import { Play, ExternalLink, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { allCourses, formatDuration, formatViews, getTotalVideos } from "@/data/videoData";
 
-// Get top 6 most viewed videos across all courses
+// Filter to only show actual physics lecture videos (exclude motivational, strategy, experiments)
+const skipWords = [
+  "social experiment", "motivational", "international media", "feel like not studying",
+  "strategy", "motivation", "interview", "backlog", "time table", "study plan",
+  "crash course", "rank booster", "paper experience", "inorganic chemistry",
+  "how to", "tips on", "aspirant", "score 120", "quick analysis", "paper analysis",
+  "study tips", "neet 2021 physics paper", "neet 2022", "jee 2022"
+];
+
 const topVideos = allCourses
+  .filter(c => c.id !== "strategy-motivation" && c.id !== "popcorn-physics" && c.id !== "neet-one-shot")
   .flatMap(c => c.videos)
+  .filter(v => !skipWords.some(w => v.title.toLowerCase().includes(w)))
   .sort((a, b) => b.views - a.views)
   .slice(0, 6);
 
@@ -96,7 +106,7 @@ export default function VideosSection() {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-12 h-[2px] bg-gradient-to-r from-cyan-500 to-transparent" />
             <span className="text-sm font-medium text-cyan-400 uppercase tracking-widest" style={{ fontFamily: "var(--font-mono)" }}>
-              Most Popular
+              Top Physics Lectures
             </span>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -131,7 +141,7 @@ export default function VideosSection() {
           </div>
         </motion.div>
 
-        {/* Video Grid — Top 6 most viewed */}
+        {/* Video Grid — Top 6 physics lectures */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {topVideos.map((video, i) => (
             <VideoCard key={video.videoId} video={video} index={i} />

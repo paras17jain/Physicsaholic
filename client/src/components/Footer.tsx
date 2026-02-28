@@ -56,10 +56,15 @@ export default function Footer() {
               Master IIT JEE & NEET Physics with Prateek Jain Sir. Concept-first approach to build deep understanding.
             </p>
             <div className="flex gap-3">
-              {["▶", "📷", "✈", "🎓"].map((icon, i) => (
-                <div key={i} className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-sm hover:bg-amber-500/10 transition-colors cursor-pointer">
-                  {icon}
-                </div>
+              {[
+                { icon: "▶", url: "https://www.youtube.com/@IITJEENEET" },
+                { icon: "📷", url: "https://www.instagram.com/physicsaholics/" },
+                { icon: "✈", url: "https://t.me/physicsaholics" },
+                { icon: "🌐", url: "https://www.physicsaholics.com" },
+              ].map((item, i) => (
+                <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-sm hover:bg-amber-500/10 transition-colors cursor-pointer">
+                  {item.icon}
+                </a>
               ))}
             </div>
           </div>
@@ -115,13 +120,13 @@ export default function Footer() {
               Join thousands of students who have transformed their physics understanding.
             </p>
             <a
-              href="https://unacademy.com/@prateekjain"
+              href="https://www.youtube.com/@IITJEENEET?sub_confirmation=1"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] hover:from-amber-400 hover:to-amber-500 transition-all duration-300"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Join on Unacademy
+              Subscribe on YouTube
             </a>
           </div>
         </div>

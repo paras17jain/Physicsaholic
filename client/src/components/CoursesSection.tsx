@@ -147,13 +147,13 @@ export default function CoursesSection() {
                       <span style={{ fontFamily: "var(--font-mono)" }}>Video Solutions</span>
                     </div>
                     <a
-                      href="https://unacademy.com/@prateekjain"
+                      href="https://www.youtube.com/@IITJEENEET"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ml-auto text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors"
                       style={{ fontFamily: "var(--font-display)" }}
                     >
-                      Enroll Now →
+                      Watch Now →
                     </a>
                   </div>
                 </div>

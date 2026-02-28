@@ -1,7 +1,7 @@
 /**
  * Courses Page — Curated video library from Physicsaholics YouTube channel
  * Design: Cosmic Classroom — dark navy with amber/cyan accents
- * 279 videos organized into 18 courses across Class 11, 12, and Special sections
+ * Now with progress tracking: mark videos as watched, see course completion %
  */
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
@@ -11,13 +11,15 @@ import {
   BookOpen, GraduationCap, Sparkles, Search, Filter,
   Calculator, Ruler, ArrowUpRight, TrendingUp, Zap,
   Globe, Activity, Atom, Battery, Cable, Magnet,
-  Lightbulb, Flame, Target, Stethoscope
+  Lightbulb, Flame, Target, Stethoscope, CheckCircle2, Circle,
+  BarChart3
 } from "lucide-react";
 import {
   allCourses, class11Courses, class12Courses, specialCourses,
   formatDuration, formatViews, getTotalVideos, getTotalDuration,
   type CourseSection, type VideoItem
 } from "@/data/videoData";
+import { useProgress } from "@/hooks/useProgress";
 
 const iconMap: Record<string, React.ReactNode> = {
   Calculator: <Calculator className="w-5 h-5" />,
@@ -40,54 +42,87 @@ const iconMap: Record<string, React.ReactNode> = {
   Stethoscope: <Stethoscope className="w-5 h-5" />,
 };
 
-function VideoCard({ video, index }: { video: VideoItem; index: number }) {
+function VideoCard({ video, index, isWatched, onToggleWatched }: {
+  video: VideoItem;
+  index: number;
+  isWatched: boolean;
+  onToggleWatched: () => void;
+}) {
   return (
-    <motion.a
-      href={`https://www.youtube.com/watch?v=${video.videoId}`}
-      target="_blank"
-      rel="noopener noreferrer"
+    <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.03, duration: 0.3 }}
-      className="group flex items-start gap-3 p-3 rounded-lg bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.05] hover:border-amber-500/30 transition-all duration-300"
+      className={`group flex items-start gap-3 p-3 rounded-lg border transition-all duration-300 ${
+        isWatched
+          ? "bg-green-500/[0.05] border-green-500/20"
+          : "bg-white/[0.03] hover:bg-white/[0.07] border-white/[0.05] hover:border-amber-500/30"
+      }`}
     >
-      <div className="relative flex-shrink-0 w-28 h-16 rounded-md overflow-hidden bg-slate-800">
-        <img
-          src={`https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`}
-          alt={video.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Play className="w-6 h-6 text-white fill-white" />
-        </div>
-        <span className="absolute bottom-1 right-1 text-[10px] bg-black/80 text-white px-1 rounded">
-          {formatDuration(video.duration)}
-        </span>
-      </div>
-      <div className="flex-1 min-w-0">
-        <h4 className="text-sm text-slate-200 group-hover:text-amber-400 transition-colors line-clamp-2 leading-tight">
-          {video.title}
-        </h4>
-        <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-500">
-          <span className="flex items-center gap-1">
-            <Eye className="w-3 h-3" />
-            {formatViews(video.views)}
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock className="w-3 h-3" />
+      {/* Watch toggle */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onToggleWatched(); }}
+        className="flex-shrink-0 mt-0.5"
+        title={isWatched ? "Mark as unwatched" : "Mark as watched"}
+      >
+        {isWatched ? (
+          <CheckCircle2 className="w-5 h-5 text-green-400" />
+        ) : (
+          <Circle className="w-5 h-5 text-slate-600 hover:text-amber-400 transition-colors" />
+        )}
+      </button>
+
+      <a
+        href={`https://www.youtube.com/watch?v=${video.videoId}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-start gap-3 flex-1 min-w-0"
+      >
+        <div className="relative flex-shrink-0 w-28 h-16 rounded-md overflow-hidden bg-slate-800">
+          <img
+            src={`https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg`}
+            alt={video.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Play className="w-6 h-6 text-white fill-white" />
+          </div>
+          <span className="absolute bottom-1 right-1 text-[10px] bg-black/80 text-white px-1 rounded">
             {formatDuration(video.duration)}
           </span>
         </div>
-      </div>
-    </motion.a>
+        <div className="flex-1 min-w-0">
+          <h4 className={`text-sm transition-colors line-clamp-2 leading-tight ${
+            isWatched ? "text-slate-400" : "text-slate-200 group-hover:text-amber-400"
+          }`}>
+            {video.title}
+          </h4>
+          <div className="flex items-center gap-3 mt-1.5 text-xs text-slate-500">
+            <span className="flex items-center gap-1">
+              <Eye className="w-3 h-3" />
+              {formatViews(video.views)}
+            </span>
+            <span className="flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              {formatDuration(video.duration)}
+            </span>
+            {isWatched && (
+              <span className="text-green-400 font-medium">Watched</span>
+            )}
+          </div>
+        </div>
+      </a>
+    </motion.div>
   );
 }
 
-function CourseCard({ course, isExpanded, onToggle }: {
+function CourseCard({ course, isExpanded, onToggle, progress, watchedCount }: {
   course: CourseSection;
   isExpanded: boolean;
   onToggle: () => void;
+  progress: number;
+  watchedCount: number;
 }) {
   const totalDuration = course.videos.reduce((sum, v) => sum + v.duration, 0);
   const totalViews = course.videos.reduce((sum, v) => sum + v.views, 0);
@@ -105,8 +140,33 @@ function CourseCard({ course, isExpanded, onToggle }: {
           {iconMap[course.icon] || <BookOpen className="w-5 h-5" />}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-semibold text-slate-100">{course.title}</h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-base font-semibold text-slate-100">{course.title}</h3>
+            {progress === 100 && (
+              <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-green-500/20 text-green-400 border border-green-500/30">
+                COMPLETE
+              </span>
+            )}
+          </div>
           <p className="text-sm text-slate-400 mt-0.5 line-clamp-1">{course.description}</p>
+          {/* Progress bar */}
+          {progress > 0 && (
+            <div className="mt-2 flex items-center gap-2">
+              <div className="flex-1 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-500 ${
+                    progress === 100
+                      ? "bg-green-500"
+                      : "bg-gradient-to-r from-amber-500 to-cyan-500"
+                  }`}
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="text-[10px] text-slate-500 font-mono w-12 text-right">
+                {watchedCount}/{course.videos.length}
+              </span>
+            </div>
+          )}
         </div>
         <div className="flex-shrink-0 flex items-center gap-4 text-xs text-slate-500">
           <span className="hidden sm:flex items-center gap-1">
@@ -140,7 +200,7 @@ function CourseCard({ course, isExpanded, onToggle }: {
           >
             <div className="px-5 pb-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
               {course.videos.map((video, i) => (
-                <VideoCard key={video.videoId} video={video} index={i} />
+                <VideoCardWithProgress key={video.videoId} video={video} index={i} />
               ))}
             </div>
           </motion.div>
@@ -150,10 +210,23 @@ function CourseCard({ course, isExpanded, onToggle }: {
   );
 }
 
+function VideoCardWithProgress({ video, index }: { video: VideoItem; index: number }) {
+  const { isVideoWatched, toggleVideoWatched } = useProgress();
+  return (
+    <VideoCard
+      video={video}
+      index={index}
+      isWatched={isVideoWatched(video.videoId)}
+      onToggleWatched={() => toggleVideoWatched(video.videoId)}
+    />
+  );
+}
+
 export default function Courses() {
   const [activeTab, setActiveTab] = useState<"all" | "class11" | "class12" | "special">("all");
   const [expandedCourses, setExpandedCourses] = useState<Set<string>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
+  const { getCourseProgress, getCourseWatchedCount, getTotalWatchedVideos } = useProgress();
 
   const filteredCourses = useMemo(() => {
     let courses: CourseSection[];
@@ -182,6 +255,9 @@ export default function Courses() {
     });
   };
 
+  const totalWatched = getTotalWatchedVideos();
+  const totalVideos = getTotalVideos();
+
   const tabs = [
     { id: "all" as const, label: "All Courses", icon: <BookOpen className="w-4 h-4" /> },
     { id: "class11" as const, label: "Class 11", icon: <GraduationCap className="w-4 h-4" /> },
@@ -204,6 +280,18 @@ export default function Courses() {
               {getTotalVideos()} videos · {formatDuration(getTotalDuration())} of content
             </p>
           </div>
+          <Link
+            href="/progress"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-colors text-sm font-medium"
+          >
+            <BarChart3 className="w-4 h-4" />
+            <span className="hidden sm:inline">Progress</span>
+            {totalWatched > 0 && (
+              <span className="text-xs bg-amber-500/20 px-1.5 py-0.5 rounded-full">
+                {Math.round((totalWatched / totalVideos) * 100)}%
+              </span>
+            )}
+          </Link>
         </div>
       </div>
 
@@ -250,6 +338,14 @@ export default function Courses() {
               </span> videos
             </span>
           </div>
+          {totalWatched > 0 && (
+            <div className="hidden sm:flex items-center gap-2 ml-auto">
+              <CheckCircle2 className="w-4 h-4 text-green-400" />
+              <span className="text-sm text-green-400 font-medium">
+                {totalWatched} watched
+              </span>
+            </div>
+          )}
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
@@ -262,14 +358,19 @@ export default function Courses() {
 
         {/* Course List */}
         <div className="space-y-3">
-          {filteredCourses.map(course => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              isExpanded={expandedCourses.has(course.id)}
-              onToggle={() => toggleCourse(course.id)}
-            />
-          ))}
+          {filteredCourses.map(course => {
+            const videoIds = course.videos.map(v => v.videoId);
+            return (
+              <CourseCard
+                key={course.id}
+                course={course}
+                isExpanded={expandedCourses.has(course.id)}
+                onToggle={() => toggleCourse(course.id)}
+                progress={getCourseProgress(videoIds)}
+                watchedCount={getCourseWatchedCount(videoIds)}
+              />
+            );
+          })}
         </div>
 
         {filteredCourses.length === 0 && (

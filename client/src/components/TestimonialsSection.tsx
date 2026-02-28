@@ -13,7 +13,7 @@ const testimonials = [
     name: "Om Prabhu",
     achievement: "AIR 44, NEET 2022",
     score: "180/180 in Physics",
-    quote: "I am Om Prabhu; a fresher student from a non-dummy school and ended my NEET journey in 2022 with AIR-44 (Score-701/720). Physics is my strongest subject and my score was 180/180. My actual NEET physics journey started when I met Prateek Jain sir at Unacademy Plus in August 2020. After that day, I observed an abrupt change in my aptitude. He kept focusing on concepts instead of mugging up formulae — in the same manner as HCV works, but much more simplified. Physicsaholics Points helped me review the whole physics in just 3-4 hours.",
+    quote: "I am Om Prabhu; a fresher student from a non-dummy school and ended my NEET journey in 2022 with AIR-44 (Score-701/720). Physics is my strongest subject and my score was 180/180. My actual NEET physics journey started when I began learning from Prateek Jain sir in August 2020. After that day, I observed an abrupt change in my aptitude. He kept focusing on concepts instead of mugging up formulae — in the same manner as HCV works, but much more simplified. Physicsaholics Points helped me review the whole physics in just 3-4 hours.",
     avatar: "OP",
   },
   {

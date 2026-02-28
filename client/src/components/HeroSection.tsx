@@ -43,7 +43,7 @@ export default function HeroSection() {
             >
               <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
               <span className="text-sm font-medium text-amber-400" style={{ fontFamily: "var(--font-mono)" }}>
-                #1 Physics Faculty on Unacademy
+                Top Physics Educator for JEE & NEET
               </span>
             </motion.div>
 

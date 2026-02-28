@@ -9,6 +9,8 @@ import Learn from "./pages/Learn";
 import Quiz from "./pages/Quiz";
 import Flashcards from "./pages/Flashcards";
 import Courses from "./pages/Courses";
+import Progress from "./pages/Progress";
+import DPP from "./pages/DPP";
 
 // Use base path for GitHub Pages deployment, empty string for dev
 const base = import.meta.env.BASE_URL.replace(/\/$/, '') || '';
@@ -21,6 +23,8 @@ function AppRouter() {
       <Route path={"/quiz"} component={Quiz} />
       <Route path={"/flashcards"} component={Flashcards} />
       <Route path={"/courses"} component={Courses} />
+      <Route path={"/progress"} component={Progress} />
+      <Route path={"/dpp"} component={DPP} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

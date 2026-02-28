@@ -10,7 +10,7 @@ const stats = [
   { icon: Clock, value: 8, suffix: "+", label: "Years Teaching", prefix: "" },
   { icon: Trophy, value: 6, suffix: "", label: "Best AIR Produced", prefix: "AIR " },
   { icon: Users, value: 100000, suffix: "+", label: "Students Taught", prefix: "" },
-  { icon: Star, value: 1, suffix: "", label: "Rank on Unacademy", prefix: "#" },
+  { icon: Star, value: 279, suffix: "+", label: "Video Lectures", prefix: "" },
 ];
 
 function Counter({ value, prefix, suffix, duration = 2 }: { value: number; prefix: string; suffix: string; duration?: number }) {

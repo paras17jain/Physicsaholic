@@ -11,7 +11,7 @@ const socialLinks = [
   { name: "YouTube", url: "https://www.youtube.com/@PhysicsaholicsbyPrateekJain", icon: "▶" },
   { name: "Instagram", url: "https://www.instagram.com/physicsaholics/", icon: "📷" },
   { name: "Telegram", url: "https://t.me/physicsaholics", icon: "✈" },
-  { name: "Unacademy", url: "https://unacademy.com/@prateekjain", icon: "🎓" },
+  { name: "Website", url: "https://www.physicsaholics.com", icon: "🌐" },
 ];
 
 export default function ContactSection() {

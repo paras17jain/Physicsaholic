@@ -12,8 +12,8 @@ const PORTRAIT = "https://d2xsxph8kpxj0f.cloudfront.net/310519663318567070/4FDFm
 const credentials = [
   { icon: BookOpen, label: "Subject", value: "Physics", color: "text-amber-400" },
   { icon: GraduationCap, label: "Experience", value: "8+ Years", color: "text-cyan-400" },
-  { icon: Trophy, label: "Unacademy Rank", value: "#1 Faculty", color: "text-amber-400" },
-  { icon: Award, label: "Top Rank Produced", value: "AIR 6, AIR 10", color: "text-cyan-400" },
+  { icon: Trophy, label: "Top Rank", value: "AIR 6 Produced", color: "text-amber-400" },
+  { icon: Award, label: "Video Lectures", value: "279+ on YouTube", color: "text-cyan-400" },
   { icon: Microscope, label: "Research", value: "With HC Verma, IIT Kanpur", color: "text-amber-400" },
   { icon: Users, label: "Exam Expertise", value: "JEE, NEET, Olympiad", color: "text-cyan-400" },
 ];
@@ -83,7 +83,7 @@ export default function AboutSection() {
           <div className="lg:col-span-3 space-y-8">
             <AnimatedSection delay={0.2}>
               <p className="text-lg text-slate-300 leading-relaxed" style={{ fontFamily: "var(--font-body)" }}>
-                Prateek Jain Sir is a prominent IIT-JEE & NEET Physics faculty based in Kota. Currently the <span className="text-white font-semibold">#1 Physics Faculty on Unacademy</span>, he brings over 8 years of teaching experience from several top coaching institutes across India.
+                Prateek Jain Sir is a prominent IIT-JEE & NEET Physics faculty based in Kota. With over <span className="text-white font-semibold">8 years of teaching experience</span> across several top coaching institutes in India, he is one of the most trusted physics educators for competitive exam preparation.
               </p>
               <p className="text-lg text-slate-400 leading-relaxed mt-4" style={{ fontFamily: "var(--font-body)" }}>
                 He has produced several top ranks including <span className="text-amber-400 font-semibold">AIR 6</span> and <span className="text-amber-400 font-semibold">AIR 10</span>, and has conducted research work with <span className="text-white font-semibold">HC Verma Sir at IIT Kanpur</span>. His teaching philosophy focuses on building deep conceptual understanding rather than rote memorization.

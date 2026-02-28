@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useSearch } from "wouter";
 import { ArrowLeft, Zap, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight, BookOpen, Timer, Target } from "lucide-react";
 import { quizQuestions, allConcepts } from "@/data/physicsData";
+import { useProgress } from "@/hooks/useProgress";
 
 export default function Quiz() {
   const searchString = useSearch();
@@ -54,10 +55,15 @@ export default function Quiz() {
     }
   };
 
+  const { addQuizScore } = useProgress();
+
   const handleNext = () => {
     if (currentIndex + 1 >= questions.length) {
       setQuizComplete(true);
       setIsRunning(false);
+      // Save score to progress tracker
+      const topicName = selectedConcept === "all" ? "Mixed Topics" : (allConcepts.find(c => c.id === selectedConcept)?.title || "Mixed Topics");
+      addQuizScore(score + (selectedAnswer === currentQuestion.correctIndex ? 1 : 0), questions.length, topicName);
     } else {
       setCurrentIndex((i) => i + 1);
       setSelectedAnswer(null);

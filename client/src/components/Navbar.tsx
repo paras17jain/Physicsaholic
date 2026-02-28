@@ -4,7 +4,7 @@
  * Font: Space Grotesk for brand, DM Sans for links
  */
 import { useState, useEffect } from "react";
-import { Menu, X, BookOpen, Play } from "lucide-react";
+import { Menu, X, BookOpen, Play, BarChart3, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 
@@ -85,14 +85,31 @@ export default function Navbar() {
             <Play className="w-3.5 h-3.5" />
             Videos
           </Link>
+          <Link
+            href="/dpp"
+            className="px-4 py-2 text-sm font-medium text-orange-400 hover:text-orange-300 transition-colors duration-300 rounded-lg hover:bg-orange-500/5 flex items-center gap-1.5"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            <FileText className="w-3.5 h-3.5" />
+            DPP
+          </Link>
+          <Link
+            href="/progress"
+            className="px-4 py-2 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors duration-300 rounded-lg hover:bg-emerald-500/5 flex items-center gap-1.5"
+            style={{ fontFamily: "var(--font-body)" }}
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            Progress
+          </Link>
           <a
-            href="https://unacademy.com/@prateekjain"
+            href="https://www.youtube.com/@IITJEENEET"
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-3 px-5 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] hover:from-amber-400 hover:to-amber-500 transition-all duration-300 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40"
+            className="ml-3 px-5 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] hover:from-amber-400 hover:to-amber-500 transition-all duration-300 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 flex items-center gap-1.5"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Join Now
+            <Play className="w-3.5 h-3.5" />
+            Subscribe
           </a>
         </div>
 
@@ -141,13 +158,30 @@ export default function Navbar() {
                 <Play className="w-3.5 h-3.5" />
                 Video Courses
               </Link>
+              <Link
+                href="/dpp"
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-orange-400 hover:text-orange-300 transition-colors rounded-lg hover:bg-orange-500/5 flex items-center gap-1.5"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                Practice DPPs
+              </Link>
+              <Link
+                href="/progress"
+                onClick={() => setMobileOpen(false)}
+                className="px-4 py-3 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors rounded-lg hover:bg-emerald-500/5 flex items-center gap-1.5"
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                My Progress
+              </Link>
               <a
-                href="https://unacademy.com/@prateekjain"
+                href="https://www.youtube.com/@IITJEENEET"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 px-5 py-3 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] text-center"
+                className="mt-2 px-5 py-3 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 text-[#0B1120] text-center flex items-center justify-center gap-1.5"
               >
-                Join Now
+                <Play className="w-3.5 h-3.5" />
+                Subscribe
               </a>
             </div>
           </motion.div>

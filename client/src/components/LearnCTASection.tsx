@@ -4,7 +4,7 @@
  */
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { BookOpen, Zap, Layers, ArrowRight, Atom, Brain, FlaskConical } from "lucide-react";
+import { BookOpen, Zap, Layers, ArrowRight, Atom, Brain, FlaskConical, FileText } from "lucide-react";
 import { Link } from "wouter";
 
 const features = [
@@ -22,7 +22,7 @@ const features = [
   {
     icon: Zap,
     title: "Interactive Quiz",
-    description: "25+ MCQ questions with instant feedback, explanations, scoring, and timer",
+    description: "90+ MCQ questions with instant feedback, explanations, scoring, and timer",
     href: "/quiz",
     color: "cyan",
     gradient: "from-cyan-500/10 to-cyan-600/5",
@@ -33,13 +33,24 @@ const features = [
   {
     icon: Layers,
     title: "Flashcards",
-    description: "20+ revision flashcards with flip animation, progress tracking, and spaced repetition",
+    description: "40+ revision flashcards with flip animation, progress tracking, and spaced repetition",
     href: "/flashcards",
     color: "emerald",
     gradient: "from-emerald-500/10 to-emerald-600/5",
     border: "border-emerald-500/20",
     iconBg: "bg-emerald-500/10",
     iconColor: "text-emerald-400",
+  },
+  {
+    icon: FileText,
+    title: "Practice DPPs",
+    description: "15 chapter-wise PDF practice sheets with 150 problems — Easy, Medium & Hard for JEE/NEET",
+    href: "/dpp",
+    color: "orange",
+    gradient: "from-orange-500/10 to-orange-600/5",
+    border: "border-orange-500/20",
+    iconBg: "bg-orange-500/10",
+    iconColor: "text-orange-400",
   },
 ];
 
@@ -86,7 +97,7 @@ export default function LearnCTASection() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
           {features.map((feature, i) => (
             <motion.div
               key={feature.title}
